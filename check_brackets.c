@@ -5,6 +5,7 @@ int main() {
     int max_line = 105000;
 	char input_buffer[max_line];
 	int input_len = 0;	
+    int pos = -1;
 	
 	fgets(input_buffer, max_line, stdin);	
 	input_buffer [strcspn (input_buffer, "\r\n")] = '\0';  //remove end-of-line characters
@@ -18,15 +19,49 @@ int main() {
         char next = input_buffer[position];
 
         if (next == '(' || next == '[' || next == '{') {
-            // Process opening bracket, write your code here
+            Bracket b;
+            b.position = position;
+            switch(next){
+                case '(':
+                    b.type = ROUND;
+                    break;
+                case '[':
+                    b.type = SQUARE;
+                    break;
+                case '{':
+                    b.type = CURLY;
+                    break;
+            }
+            push(opening_brackets_stack, b);
         }
 
         if (next == ')' || next == ']' || next == '}') {
-            // Process closing bracket, write your code here
+            if(isEmpty(opening_brackets_stack)){
+                pos = position + 1;
+                break;
+            }
+            Bracket b = pop(opening_brackets_stack);
+            if(next == ')' && b.type != ROUND){
+                pos = position + 1;
+                break;
+            }
+            else if(next == ']' && b.type != SQUARE){
+                pos = position + 1;
+                break;
+            }
+            else if(next == '}' && b.type != CURLY){
+                pos = position + 1;
+                break;
+            }
         }
     }
 
     // Printing answer, write your code here
-	printf("My result is:\n");
+    if(pos == -1){
+        printf("Success!\n");
+    }
+    else{
+        printf("My result is:%d\n", pos);
+    }
     return 0;
 }

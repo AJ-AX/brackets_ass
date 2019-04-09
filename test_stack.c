@@ -15,5 +15,11 @@ int main()
 	Bracket top = pop(stack);
     printf("Popped from stack: bracket of type %d at position %d\n", top.type, top.position); 
   
+    Bracket lop = pop(stack);
+    printf("Popped from stack: bracket of type %d at position %d\n", lop.type, lop.position); 
+
+    Bracket zop = pop(stack);
+    printf("Popped from stack: bracket of type %d at position %d\n", zop.type, zop.position);
+
     return 0; 
 } 
